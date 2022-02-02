@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Platform : MonoBehaviour
 {
-    public Transform player;
     public float speed;
     public Transform first_pos;
     public Transform second_pos;

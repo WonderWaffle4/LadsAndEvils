@@ -38,7 +38,7 @@ public class wasd : MonoBehaviour
     {
         if (other.tag == "platform")
         {
-            
+            transform.parent = other.transform;
         }
     }
 
@@ -50,7 +50,7 @@ public class wasd : MonoBehaviour
         }
         if (other.tag == "platform")
         {
-            
+            transform.parent = null;
         }
     }
 
