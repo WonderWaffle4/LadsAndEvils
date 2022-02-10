@@ -7,7 +7,8 @@ public class Platform : MonoBehaviour
     public float speed;
     public Transform first_pos;
     public Transform second_pos;
-
+    public Vector3 lastPosition;
+    public Vector3 deltaPosition;
     private bool moving_right = true;
     private Vector3 start;
     private Vector3 finish;
@@ -18,9 +19,18 @@ public class Platform : MonoBehaviour
         finish = second_pos.position;
     }
 
-    public void Update()
+    //public void Update()
+    //{
+        
+        
+    //}
+
+    public void FixedUpdate()
     {
+        lastPosition = transform.position;
         PlatformMove();
+        deltaPosition = transform.position - lastPosition;
+        print(deltaPosition.x);
     }
 
     private void PlatformMove()
