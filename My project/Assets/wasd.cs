@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class wasd : MonoBehaviour
 {
-    public float speed;//скорость перемещения
-    public float jump_power;//сила прыжка
+    public float speed;//СЃРєРѕСЂРѕСЃС‚СЊ РїРµСЂРµРјРµС‰РµРЅРёСЏ
+    public float jump_power;//СЃРёР»Р° РїСЂС‹Р¶РєР°
 
     private float gravity_force;
     private Vector3 move_vector;
@@ -16,7 +16,7 @@ public class wasd : MonoBehaviour
     void Start()
     {
         controller = GetComponent<CharacterController>();//wasd
-        animator = GetComponent<Animator>();//аниматор
+        animator = GetComponent<Animator>();//Р°РЅРёРјР°С‚РѕСЂ
     }
 
     void Update()
@@ -32,13 +32,9 @@ public class wasd : MonoBehaviour
             gravity_force = 0;
             Climb();
         }
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.tag == "platform")
+        if(other.tag == "platform")
         {
-            transform.parent = other.transform;
+            controller.Move(other.GetComponent<Platform>().deltaPosition);
         }
     }
 
@@ -50,11 +46,11 @@ public class wasd : MonoBehaviour
         }
         if (other.tag == "platform")
         {
-            transform.parent = null;
+            
         }
     }
 
-    //взбирание по лестнице
+    //РІР·Р±РёСЂР°РЅРёРµ РїРѕ Р»РµСЃС‚РЅРёС†Рµ
     private void Climb()
     {
         move_vector = Vector3.zero;
@@ -71,7 +67,7 @@ public class wasd : MonoBehaviour
         controller.Move(move_vector * Time.deltaTime);
     }
 
-    private void Control()//перемещение персонажа
+    private void Control()//РїРµСЂРµРјРµС‰РµРЅРёРµ РїРµСЂСЃРѕРЅР°Р¶Р°
     {
         if (controller.isGrounded)
         {
@@ -85,7 +81,7 @@ public class wasd : MonoBehaviour
                 move_vector.x = Input.GetAxis("Horizontal") * speed;
             }
 
-            //поворот персонажа при передвижении
+            //РїРѕРІРѕСЂРѕС‚ РїРµСЂСЃРѕРЅР°Р¶Р° РїСЂРё РїРµСЂРµРґРІРёР¶РµРЅРёРё
             if (Vector3.Angle(Vector3.forward, move_vector) > 1f || Vector3.Angle(Vector3.forward, move_vector) == 0)
             {
                 Vector3 direct = Vector3.RotateTowards(transform.forward, move_vector, speed, 0.0f);
@@ -100,7 +96,7 @@ public class wasd : MonoBehaviour
 
     private void Gravity()
     {
-        //гравитация
+        //РіСЂР°РІРёС‚Р°С†РёСЏ
         if (!controller.isGrounded)
         {
             gravity_force -= 20f * Time.deltaTime;
@@ -110,7 +106,7 @@ public class wasd : MonoBehaviour
             gravity_force = -1;
         }
 
-        //прыжок
+        //РїСЂС‹Р¶РѕРє
         if (Input.GetKeyDown(KeyCode.Space) && controller.isGrounded)
         {
             gravity_force = jump_power;
