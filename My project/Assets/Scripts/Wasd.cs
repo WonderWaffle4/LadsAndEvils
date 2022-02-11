@@ -11,6 +11,7 @@ public class Wasd : MonoBehaviour
     private float gravity_force;//гравитация
     private Vector3 move_vector;//коэффициент перемещения
     private bool onLadder;//если игрок на лестнице
+    private bool canJump;//если игрок может прыгать
     private CharacterController controller;//котроллер
     private Animator animator;
 
@@ -44,6 +45,28 @@ public class Wasd : MonoBehaviour
             else
                 controller.Move(platformMoverRight);//вправо
         }
+        if(other.tag == "BoxTrigger")
+        {
+            MoveBox(other);
+        }
+    }
+
+    private void MoveBox(Collider other)
+    {
+        print("In Box");
+        if (Input.GetKey(KeyCode.E))
+        {
+            print("Grabbed");
+            speed = 2;
+            canJump = false;
+            other.GetComponent<Box>().controller.Move(move_vector);
+        }
+        if (Input.GetKeyUp(KeyCode.E))
+        {
+            print("Ungrabbed");
+            canJump = true;
+            speed = 7;
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -52,6 +75,11 @@ public class Wasd : MonoBehaviour
         {
             gravity_force -= 20f * Time.deltaTime;
             onLadder = false;
+        }
+        if(other.tag == "BoxTrigger")
+        {
+            speed = 7;
+            canJump = true;
         }
     }
 
@@ -82,10 +110,14 @@ public class Wasd : MonoBehaviour
                 transform.rotation = Quaternion.LookRotation(direct);
             } 
         }
+        
         move_vector.y = gravity_force;
 
         if (onLadder)
+        {
+            canJump = false;
             Climb();
+        }
 
         controller.Move(move_vector * Time.deltaTime);
     }
@@ -95,15 +127,17 @@ public class Wasd : MonoBehaviour
         //гравитация
         if (!controller.isGrounded && !onLadder)
         {
+            canJump = false;
             gravity_force -= 20f * Time.deltaTime;
         }
         else
         {
+            canJump = true;
             gravity_force = -1;
         }
 
         //прыжок
-        if (Input.GetKeyDown(KeyCode.Space) && controller.isGrounded)
+        if (Input.GetKeyDown(KeyCode.Space) && true)
         {
             gravity_force = jump_power;
         }
