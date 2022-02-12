@@ -862,6 +862,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1189622106765386560, guid: a13da1b25d0f5c049b6a9c21f71a32ad, type: 3}
+      propertyPath: jumpPower
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 1189622106765386560, guid: a13da1b25d0f5c049b6a9c21f71a32ad, type: 3}
       propertyPath: ActionTextE
       value: 
       objectReference: {fileID: 1607400495}
