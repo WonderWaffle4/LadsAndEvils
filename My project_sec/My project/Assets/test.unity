@@ -211,7 +211,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!223 &92783296
 Canvas:
   m_ObjectHideFlags: 0
@@ -221,7 +221,7 @@ Canvas:
   m_GameObject: {fileID: 92783293}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
+  m_RenderMode: 2
   m_Camera: {fileID: 0}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -240,19 +240,19 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 92783293}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -1.333778}
+  m_LocalScale: {x: 0.4763493, y: 0.4763493, z: 0.4763493}
   m_Children:
   - {fileID: 1607400494}
-  m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_Father: {fileID: 1763685230}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 227.45201, y: 91.73533}
+  m_SizeDelta: {x: 956, y: 388}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &277930080
 GameObject:
   m_ObjectHideFlags: 0
@@ -1107,11 +1107,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7336856353759599155, guid: 23829b0cab4ab46428b66cc16bf9370c, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1
+      value: 0.025
       objectReference: {fileID: 0}
     - target: {fileID: 7336856353759599155, guid: 23829b0cab4ab46428b66cc16bf9370c, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1
+      value: 0.025
       objectReference: {fileID: 0}
     - target: {fileID: 7336856353759599155, guid: 23829b0cab4ab46428b66cc16bf9370c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1143,11 +1143,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7336856353759599155, guid: 23829b0cab4ab46428b66cc16bf9370c, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -30
+      value: -476.6002
       objectReference: {fileID: 0}
     - target: {fileID: 7336856353759599155, guid: 23829b0cab4ab46428b66cc16bf9370c, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 100
+      value: -189.67
       objectReference: {fileID: 0}
     - target: {fileID: 7336856353759599155, guid: 23829b0cab4ab46428b66cc16bf9370c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

@@ -119,7 +119,7 @@ public class Wasd : MonoBehaviour
                 move_vector.x = Input.GetAxis("Horizontal") * speed;
 
             //поворот персонажа при передвижении
-            if (Vector3.Angle(Vector3.forward, move_vector) > 1f || Vector3.Angle(Vector3.forward, move_vector) == 0)
+            if (!(WithBox) && Vector3.Angle(Vector3.forward, move_vector) > 1f || Vector3.Angle(Vector3.forward, move_vector) == 0)
             {
                 Vector3 direct = Vector3.RotateTowards(transform.forward, move_vector, speed, 0.0f);
                 transform.rotation = Quaternion.LookRotation(direct);
