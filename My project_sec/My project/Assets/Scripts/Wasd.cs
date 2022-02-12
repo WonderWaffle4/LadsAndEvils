@@ -5,27 +5,27 @@ using UnityEngine.UIElements;
 
 public class Wasd : MonoBehaviour
 {
-    public float speed;//скорость перемещения
-    public float jump_power;//сила прыжка
+    public float speed;//СЃРєРѕСЂРѕСЃС‚СЊ РїРµСЂРµРјРµС‰РµРЅРёСЏ
+    public float jumpPower;//СЃРёР»Р° РїСЂС‹Р¶РєР°
 
-    private Vector3 platformMoverLeft = new Vector3(-0.02f, 0f, 0f);//коэффициент перемещения игрока при движении платформы влево
-    private Vector3 platformMoverRight = new Vector3(0.02f, 0f, 0f);//коэффициент перемещения игрока при движении платформы вправо
+    private Vector3 platformMoverLeft = new Vector3(-0.02f, 0f, 0f);//РєРѕСЌС„С„РёС†РёРµРЅС‚ РїРµСЂРµРјРµС‰РµРЅРёСЏ РёРіСЂРѕРєР° РїСЂРё РґРІРёР¶РµРЅРёРё РїР»Р°С‚С„РѕСЂРјС‹ РІР»РµРІРѕ
+    private Vector3 platformMoverRight = new Vector3(0.02f, 0f, 0f);//РєРѕСЌС„С„РёС†РёРµРЅС‚ РїРµСЂРµРјРµС‰РµРЅРёСЏ РёРіСЂРѕРєР° РїСЂРё РґРІРёР¶РµРЅРёРё РїР»Р°С‚С„РѕСЂРјС‹ РІРїСЂР°РІРѕ
 
-    private float gravity_force;//гравитация
-    private Vector3 move_vector;//коэффициент перемещения
+    private float gravityForce;//РіСЂР°РІРёС‚Р°С†РёСЏ
+    private Vector3 moveVector;//РєРѕСЌС„С„РёС†РёРµРЅС‚ РїРµСЂРµРјРµС‰РµРЅРёСЏ
 
-    private bool onLadder;//если игрок на лестнице
-    private bool canJump;//если игрок может прыгать
-    private bool WithBox;//если игрок с коробкой
+    private bool onLadder;//РµСЃР»Рё РёРіСЂРѕРє РЅР° Р»РµСЃС‚РЅРёС†Рµ
+    private bool canJump;//РµСЃР»Рё РёРіСЂРѕРє РјРѕР¶РµС‚ РїСЂС‹РіР°С‚СЊ
+    private bool withBox;//РµСЃР»Рё РёРіСЂРѕРє СЃ РєРѕСЂРѕР±РєРѕР№
 
-    private CharacterController controller;//котроллер
+    private CharacterController controller;//РєРѕС‚СЂРѕР»Р»РµСЂ
     private Animator animator;
 
     void Start()
     {
-        WithBox = false;
+        withBox = false;
         controller = GetComponent<CharacterController>();//wasd
-        animator = GetComponent<Animator>();//аниматор
+        animator = GetComponent<Animator>();//Р°РЅРёРјР°С‚РѕСЂ
     }
 
     void Update()
@@ -39,7 +39,7 @@ public class Wasd : MonoBehaviour
         switch (other.tag)
         {
             case "Stair":
-                gravity_force = 0;
+                gravityForce = 0;
                 break;
         }
     }
@@ -52,11 +52,11 @@ public class Wasd : MonoBehaviour
                 onLadder = true;
                 break;
             case "platform":
-                //перемещение игрока на платформе
+                //РїРµСЂРµРјРµС‰РµРЅРёРµ РёРіСЂРѕРєР° РЅР° РїР»Р°С‚С„РѕСЂРјРµ
                 if (!other.GetComponent<Platform>().moving_right)
-                    controller.Move(platformMoverLeft);//влево
+                    controller.Move(platformMoverLeft);//РІР»РµРІРѕ
                 else
-                    controller.Move(platformMoverRight);//вправо
+                    controller.Move(platformMoverRight);//РІРїСЂР°РІРѕ
                 break;
             case "BoxTrigger":
                 MoveBox(other);
@@ -67,13 +67,13 @@ public class Wasd : MonoBehaviour
     private void MoveBox(Collider other)
     {
         print("In Box");
-        if (Input.GetKey(KeyCode.E))
+        if (Input.GetKey(KeyCode.E) && controller.isGrounded)
         {
             print("Grabbed");
             speed = 2;
             canJump = false;
             other.transform.parent = transform;
-            WithBox = true;
+            withBox = true;
         }
         else if (Input.GetKey(KeyCode.G))
         {
@@ -81,7 +81,7 @@ public class Wasd : MonoBehaviour
             canJump = true;
             speed = 7;
             other.transform.parent = null;
-            WithBox = false;
+            withBox = false;
         }
     }
 
@@ -89,7 +89,7 @@ public class Wasd : MonoBehaviour
     {
         if(other.tag == "Stair")
         {
-            gravity_force -= 20f * Time.deltaTime;
+            gravityForce -= 20f * Time.deltaTime;
             onLadder = false;
         }
         if(other.tag == "BoxTrigger")
@@ -99,34 +99,34 @@ public class Wasd : MonoBehaviour
         }
     }
 
-    //взбирание по лестнице
+    //РІР·Р±РёСЂР°РЅРёРµ РїРѕ Р»РµСЃС‚РЅРёС†Рµ
     private void Climb()
     {
-        move_vector.y = Input.GetAxis("Vertical") * (speed - 2);//перемещение по вертикали на лестнице
+        moveVector.y = Input.GetAxis("Vertical") * (speed - 2);//РїРµСЂРµРјРµС‰РµРЅРёРµ РїРѕ РІРµСЂС‚РёРєР°Р»Рё РЅР° Р»РµСЃС‚РЅРёС†Рµ
     }
 
-    //перемещение персонажа
+    //РїРµСЂРµРјРµС‰РµРЅРёРµ РїРµСЂСЃРѕРЅР°Р¶Р°
     private void Control()
     {
         if (controller.isGrounded || onLadder)
         {
-            move_vector = Vector3.zero;
-            if (Input.GetKey(KeyCode.LeftShift) && !(WithBox))
-                move_vector.x = Input.GetAxis("Horizontal") * (speed + 5);
-            else if(Input.GetKey(KeyCode.LeftShift) && WithBox)
-                move_vector.x = Input.GetAxis("Horizontal") * (speed + 2);
+            moveVector = Vector3.zero;
+            if (Input.GetKey(KeyCode.LeftShift) && !(withBox))
+                moveVector.x = Input.GetAxis("Horizontal") * (speed + 5);
+            else if(Input.GetKey(KeyCode.LeftShift) && withBox)
+                moveVector.x = Input.GetAxis("Horizontal") * (speed + 2);
             else
-                move_vector.x = Input.GetAxis("Horizontal") * speed;
+                moveVector.x = Input.GetAxis("Horizontal") * speed;
 
-            //поворот персонажа при передвижении
-            if (!(WithBox) && Vector3.Angle(Vector3.forward, move_vector) > 1f || Vector3.Angle(Vector3.forward, move_vector) == 0)
+            //РїРѕРІРѕСЂРѕС‚ РїРµСЂСЃРѕРЅР°Р¶Р° РїСЂРё РїРµСЂРµРґРІРёР¶РµРЅРёРё
+            if (Vector3.Angle(Vector3.forward, moveVector) > 1f || Vector3.Angle(Vector3.forward, moveVector) == 0)
             {
-                Vector3 direct = Vector3.RotateTowards(transform.forward, move_vector, speed, 0.0f);
+                Vector3 direct = Vector3.RotateTowards(transform.forward, moveVector, speed, 0.0f);
                 transform.rotation = Quaternion.LookRotation(direct);
             }
         }
 
-        move_vector.y = gravity_force;
+        moveVector.y = gravityForce;
 
         if (onLadder)
         {
@@ -134,28 +134,28 @@ public class Wasd : MonoBehaviour
             Climb();
         }
 
-        controller.Move(move_vector * Time.deltaTime);
+        controller.Move(moveVector * Time.deltaTime);
     }
 
-    //немного физики
+    //РЅРµРјРЅРѕРіРѕ С„РёР·РёРєРё
     private void Gravity()
     {
-        //гравитация
+        //РіСЂР°РІРёС‚Р°С†РёСЏ
         if (!controller.isGrounded && !onLadder)
         {
             canJump = false;
-            gravity_force -= 20f * Time.deltaTime;
+            gravityForce -= 20f * Time.deltaTime;
         }
         else
         {
             canJump = true;
-            gravity_force = -1;
+            gravityForce = -1;
         }
 
-        //прыжок
-        if (Input.GetKeyDown(KeyCode.Space) && controller.isGrounded && !(WithBox))
+        //РїСЂС‹Р¶РѕРє
+        if (Input.GetKeyDown(KeyCode.Space) && controller.isGrounded && !(withBox))
         {
-            gravity_force = jump_power;
+            gravityForce = jumpPower;
         }
     }
 }
