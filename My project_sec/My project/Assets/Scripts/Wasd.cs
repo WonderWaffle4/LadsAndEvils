@@ -75,7 +75,7 @@ public class Wasd : MonoBehaviour
             other.transform.parent = transform;
             withBox = true;
         }
-        else if (Input.GetKey(KeyCode.G))
+        else if (Input.GetKeyUp(KeyCode.E))
         {
             print("Ungrabbed");
             canJump = true;
@@ -119,7 +119,7 @@ public class Wasd : MonoBehaviour
                 moveVector.x = Input.GetAxis("Horizontal") * speed;
 
             //поворот персонажа при передвижении
-            if (Vector3.Angle(Vector3.forward, moveVector) > 1f || Vector3.Angle(Vector3.forward, moveVector) == 0)
+            if ((!withBox) && Vector3.Angle(Vector3.forward, moveVector) > 1f || Vector3.Angle(Vector3.forward, moveVector) == 0)
             {
                 Vector3 direct = Vector3.RotateTowards(transform.forward, moveVector, speed, 0.0f);
                 transform.rotation = Quaternion.LookRotation(direct);
