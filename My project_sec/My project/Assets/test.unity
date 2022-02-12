@@ -863,7 +863,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1189622106765386560, guid: a13da1b25d0f5c049b6a9c21f71a32ad, type: 3}
       propertyPath: jumpPower
-      value: 11
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 1189622106765386560, guid: a13da1b25d0f5c049b6a9c21f71a32ad, type: 3}
       propertyPath: ActionTextE
@@ -1404,6 +1404,10 @@ PrefabInstance:
     - target: {fileID: 5323917928786681317, guid: 2dbf32d039d5c8f42a8add7e95a69283, type: 3}
       propertyPath: m_Center.y
       value: -0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 5323917928786681319, guid: 2dbf32d039d5c8f42a8add7e95a69283, type: 3}
+      propertyPath: speed
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5323917928786681319, guid: 2dbf32d039d5c8f42a8add7e95a69283, type: 3}
       propertyPath: first_pos
