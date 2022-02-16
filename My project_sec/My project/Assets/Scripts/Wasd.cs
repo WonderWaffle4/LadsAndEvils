@@ -7,6 +7,7 @@ public class Wasd : MonoBehaviour
 {
     public float speed;//скорость перемещения
     public float jumpPower;//сила прыжка
+    public GameObject pauseMenu;
 
     private Vector3 platformMoverLeft = new Vector3(-0.02f, 0f, 0f);//коэффициент перемещения игрока при движении платформы влево
     private Vector3 platformMoverRight = new Vector3(0.02f, 0f, 0f);//коэффициент перемещения игрока при движении платформы вправо
@@ -30,6 +31,10 @@ public class Wasd : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            pauseMenu.SetActive(true);
+        }
         Control();
         Gravity();
     }
