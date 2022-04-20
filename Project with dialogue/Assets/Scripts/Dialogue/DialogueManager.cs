@@ -1,66 +1,49 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using TMPro;
+using Ink.Runtime;
+
+
 
 public class DialogueManager : MonoBehaviour
 {
-    public Text nameText;
-    public Text dialogueText;
+    [Header("Dialogue UI")]
+    [SerializeField] private GameObject dialoguePanel;
+    [SerializeField] private TextMeshProUGUI dialogueText;
 
-    public Animator animator;
-    public Animator animatorButton;
+    private Story currentStory;
 
-    private Queue<string> sentences;
+    private static DialogueManager instance;
 
-    void Start()
+    private static bool dialogueIsPlaying = false;
+
+    private void Awake()
     {
-        sentences = new Queue<string>();
-    }
-    public void StartDialogue(Dialogue dialogue)
-    {
-        animator.SetBool("isOpen", true);
-        nameText.text = dialogue.name;
-        sentences.Clear();
-        foreach (string sentence in dialogue.sentences)
+        if (instance != null)
         {
-            sentences.Enqueue(sentence);
+            Debug.Log("More than one dialogue manager script in this scene");
         }
-        DisplayNextSentence();
+        instance = this; 
     }
-    public void DisplayNextSentence()
+    public static DialogueManager GetInstance()
     {
-        if (sentences.Count == 0)
+        return instance;
+    }
+    private void Start()
+    {
+        dialogueIsPlaying = false;
+        dialoguePanel.SetActive(false);
+    }
+    public void EnterDialogue(TextAsset inkJson)
+    {
+        currentStory = new Story(inkJson.text);
+        dialogueIsPlaying = true;
+        dialoguePanel.SetActive(true);
+        if (currentStory.canContinue)
         {
-            EndDialogue();
-            return;
+            dialogueText.text = currentStory.Continue();
         }
-        else
-        {
-            string sentence = sentences.Dequeue();
-           StopAllCoroutines();
-           StartCoroutine(TypeSentence(sentence));
-        }
-    }
-    IEnumerator TypeSentence(string sentence)
-    {
-        dialogueText.text = "";
-        foreach (char letter in sentence.ToCharArray())
-        {
-            dialogueText.text += letter;
-            yield return null;
-        }
-    }
-    public void EndDialogue()
-    {
-        animator.SetBool("isOpen", false);
-    }
-    public void ShowButton()
-    {
-        animatorButton.SetBool("isOpen", true);
-    }
-    public void NotShowButton()
-    {
-        animatorButton.SetBool("isOpen", false);
+        else { }
     }
 }
